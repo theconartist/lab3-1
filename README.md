@@ -1,2 +1,2 @@
 # lab3
-Recursive functions
+Recursive and higher-order functions
