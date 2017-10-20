@@ -38,21 +38,6 @@ main = hspec $ do
         prop "separates elements of a list with some value" $
             \(xs :: [Char]) (x :: Char) ->
             separatedBy x (L.intersperse x xs)
-    describe "subsequences" $ modifyMaxSize (const 10) $ do
-        prop "produces the right number of subsequences" $ \(xs :: [Int]) ->
-            length (L.subsequences xs) == 2^(length xs)
-        prop "produces unique subsequences" $ \(xs :: [Int]) ->
-            length (L.subsequences (nub xs)) ==
-            length (nub (L.subsequences (nub xs)))
-    describe "permutations" $ modifyMaxSize (const 10) $ do
-        prop "produces the right number of permutations" $ \(xs :: [Int]) ->
-            length (L.permutations xs) == fac (length xs)
-        modifyMaxSize (const 5) $ prop "produces unique permutations" $
-            \(xs :: [Int]) -> length (L.permutations (nub xs)) ==
-                              length (nub (L.permutations (nub xs)))
-        prop "permutations are all the same length as the input" $
-            \(xs :: [Int]) ->
-                all ((==) (length xs) . length) (L.permutations xs)
     describe "any" $ do
         prop "determines whether at least one element satisfies the predicate" $
             \(xs :: [Int]) -> L.any odd xs == not (null (filter odd xs))
@@ -78,6 +63,21 @@ main = hspec $ do
             \(xs :: [Int]) -> and [all (==x) xs | (x:xs) <- L.groupBy (==) xs]
         prop "the sum of lengths of the sublists is the length of the input" $
             \(xs :: [Int]) -> length xs == sum (map length $ L.groupBy (==) xs)
+    describe "subsequences" $ modifyMaxSize (const 10) $ do
+        prop "produces the right number of subsequences" $ \(xs :: [Int]) ->
+            length (L.subsequences xs) == 2^(length xs)
+        prop "produces unique subsequences" $ \(xs :: [Int]) ->
+            length (L.subsequences (nub xs)) ==
+            length (nub (L.subsequences (nub xs)))
+    describe "permutations" $ modifyMaxSize (const 10) $ do
+        prop "produces the right number of permutations" $ \(xs :: [Int]) ->
+            length (L.permutations xs) == fac (length xs)
+        modifyMaxSize (const 5) $ prop "produces unique permutations" $
+            \(xs :: [Int]) -> length (L.permutations (nub xs)) ==
+                              length (nub (L.permutations (nub xs)))
+        prop "permutations are all the same length as the input" $
+            \(xs :: [Int]) ->
+                all ((==) (length xs) . length) (L.permutations xs)
     describe "Monoid instance for Int" $ do
         prop "satisfies the left identity" $ \(x :: Int) ->
             L.mappend L.mempty x == x

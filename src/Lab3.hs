@@ -26,12 +26,6 @@ maximum = undefined
 intersperse :: a -> [a] -> [a]
 intersperse = undefined
 
-subsequences :: [a] -> [[a]]
-subsequences = undefined
-
-permutations :: Eq a => [a] -> [[a]]
-permutations = undefined
-
 any :: (a -> Bool) -> [a] -> Bool
 any = undefined
 
@@ -49,6 +43,12 @@ zipWith = undefined
 
 groupBy :: (a -> a -> Bool) -> [a] -> [[a]]
 groupBy = undefined
+
+subsequences :: [a] -> [[a]]
+subsequences = undefined
+
+permutations :: Eq a => [a] -> [[a]]
+permutations = undefined
 
 --------------------------------------------------------------------------------
 -- Monoids
