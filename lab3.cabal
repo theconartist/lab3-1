@@ -1,11 +1,11 @@
 name:                lab3
-version:             1.0.0.0
+version:             1.1.0.0
 -- synopsis:
 -- description:
-homepage:            https://github.com/cs256/lab3#readme
+homepage:            https://github.com/fpclass/lab3#readme
 author:              Michael B. Gale
 maintainer:          m.gale@warwick.ac.uk
-copyright:           2017 Michael B. Gale
+copyright:           2018 Michael B. Gale
 build-type:          Simple
 extra-source-files:  README.md
 cabal-version:       >=1.10
@@ -32,4 +32,4 @@ test-suite lab3-test
 
 source-repository head
   type:     git
-  location: https://github.com/cs256/lab3
+  location: https://github.com/fpclass/lab3

@@ -1,2 +1,1 @@
-# lab3
-Recursive and higher-order functions
+# Lab 3: Recursive & higher-order functions
