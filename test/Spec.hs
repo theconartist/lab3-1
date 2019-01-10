@@ -18,7 +18,8 @@ import qualified Lab3 as L
 separatedBy :: Eq a => a -> [a] -> Bool
 separatedBy s []       = True
 separatedBy s [y]      = True
-separatedBy s (_:y:xs) = y == s && separatedBy s xs
+separatedBy s (_:y:xs) =
+    not (null xs) && y == s && separatedBy s xs
 
 fac :: Int -> Int
 fac 0 = 1
