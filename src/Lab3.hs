@@ -14,32 +14,52 @@ import Prelude hiding ( Monoid(..), elem, maximum, intersperse, transpose
                       , subsequences, permutations, any, all, flip, takeWhile
                       , zipWith, groupBy, notElem )
 
+import Data.List.delete
 --------------------------------------------------------------------------------
 -- Recursive and higher-order functions
 
 elem :: Eq a => a -> [a] -> Bool
-elem = undefined
+elem t [] = False
+elem t (x:xs) = t == x || elem t xs
+
+elem' :: Eq a => a -> [a] -> Bool
+elem' t xs = not(null(filter (==t) xs))
 
 maximum :: Ord a => [a] -> a
-maximum = undefined
+maximum [x] = x
+maximum (x:xs) = if x > restMax then x else restMax
+    where restMax = maximum xs
+
+maximum' :: Ord a => [a] -> a
+maximum' xs = foldr1 (\x y -> if x > y then x else y) xs 
 
 intersperse :: a -> [a] -> [a]
-intersperse = undefined
+intersperse sep [x] = [x] 
+intersperse sep (x:xs) = [x] ++ [sep] ++ intersperse sep xs 
 
 any :: (a -> Bool) -> [a] -> Bool
-any = undefined
+any f [] = False
+any f (x:xs) = f x || any f xs
+
+elem'' :: Eq a => a -> [a] -> Bool
+elem'' t xs = any (==t) xs
 
 all :: (a -> Bool) -> [a] -> Bool
-all = undefined
+all f [] = True
+all f (x:xs) = f x && all f xs
 
 flip :: (a -> b -> c) -> b -> a -> c
-flip = undefined
+flip f x y = f y x
 
 takeWhile :: (a -> Bool) -> [a] -> [a]
-takeWhile = undefined
+takeWhile f [] = []
+takeWhile f (x:xs)
+    |f x == True = [x] ++ takeWhile f xs
+    |otherwise = []
 
 zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
-zipWith = undefined
+zipWith f [] [] = []
+zipWith f (x:xs) (y:ys) = [f x y] ++ zipWith f xs ys
 
 groupBy :: (a -> a -> Bool) -> [a] -> [[a]]
 groupBy = undefined
@@ -48,7 +68,7 @@ subsequences :: [a] -> [[a]]
 subsequences = undefined
 
 permutations :: Eq a => [a] -> [[a]]
-permutations = undefined
+permutations xs = [map (\y -> x ++ y) permutations (delete x xs) | x <- xs]
 
 --------------------------------------------------------------------------------
 -- Monoids
