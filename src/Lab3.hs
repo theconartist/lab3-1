@@ -14,7 +14,7 @@ import Prelude hiding ( Monoid(..), elem, maximum, intersperse, transpose
                       , subsequences, permutations, any, all, flip, takeWhile
                       , zipWith, groupBy, notElem )
 
-import Data.List.delete
+import Data.List (delete)
 --------------------------------------------------------------------------------
 -- Recursive and higher-order functions
 
@@ -54,12 +54,12 @@ flip f x y = f y x
 takeWhile :: (a -> Bool) -> [a] -> [a]
 takeWhile f [] = []
 takeWhile f (x:xs)
-    |f x == True = [x] ++ takeWhile f xs
+    |f x == True = x : takeWhile f xs
     |otherwise = []
 
 zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
 zipWith f [] [] = []
-zipWith f (x:xs) (y:ys) = [f x y] ++ zipWith f xs ys
+zipWith f (x:xs) (y:ys) = f x y : zipWith f xs ys
 
 groupBy :: (a -> a -> Bool) -> [a] -> [[a]]
 groupBy = undefined
@@ -68,7 +68,8 @@ subsequences :: [a] -> [[a]]
 subsequences = undefined
 
 permutations :: Eq a => [a] -> [[a]]
-permutations xs = [map (\y -> x ++ y) permutations (delete x xs) | x <- xs]
+permutations [] = [[]]
+permutations xs = [x:ys | x <- xs, ys <- permutations (delete x xs)]
 
 --------------------------------------------------------------------------------
 -- Monoids
